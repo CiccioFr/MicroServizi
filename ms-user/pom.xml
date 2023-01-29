@@ -16,6 +16,7 @@
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2021.0.5</spring-cloud.version>
+		<springdoc-openapi-ui>1.6.11</springdoc-openapi-ui>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -53,6 +54,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- Swagger UI -->
+		<!-- http://{host}:{port}/{context-path by yaml}/swagger-ui/index.html#/ -->
+		<!-- http://http//localhost:8090/user/swagger-ui/index.html#/user-controller/signup -->
+		<!-- verrà resa disponibile una interfaccia
+        se ci serve una response, ci mostra già lui il Json -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-ui</artifactId>
+			<version>${springdoc-openapi-ui}</version>
 		</dependency>
 	</dependencies>
 	<dependencyManagement>
