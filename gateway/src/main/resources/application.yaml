@@ -1,0 +1,38 @@
+server:
+  port: 8090
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      routes:
+        # il trattino indica che sotto root avremo blocchi di route
+        - id: mspost
+          # lb sta per LoadBalancer // che nel pom permette di accoppiare il nome dell'appli con l'indirizzo
+          # va a recuperare da Discovery l'indirizzo
+          # come uri non metto http:.. ma il nome dell'applicazione:
+          # il gateway contatta
+          uri: lb://mspost # http://localhost:xxxxx
+          predicates:
+            # Posso impostare un array di stringhe
+            #- Path=/post/**, /posts/**
+            - Path=/post/**
+        - id: msuser
+          uri: lb://msuser # http://localhost:xxxxx
+          predicates:
+            - Path=/user/**
+  client:
+    service-url:
+      # di solito viene passata come variabile d'ambiente
+      default-zone: http://localhost:8761/eureka
+
+# Modifico livello di logging
+logging:
+  level:
+    org:
+      springframework:
+        cloud:
+          gateway: trace
+        web:
+          server: trace
