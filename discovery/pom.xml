@@ -29,6 +29,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<!-- Indica che avrà le dipendenze per gestire le applicazioni in cloud -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
