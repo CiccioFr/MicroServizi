@@ -1,6 +1,6 @@
 server:
   # settare la porta a 0 indica di impostare la prima porta disponibile
-  # perchè il GateWay
+  # perchÃ¨ il GateWay
   port: 0
   servlet:
     # Tutti gli endPoint che
