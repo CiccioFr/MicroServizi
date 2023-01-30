@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Service
 public class PostService {
 
@@ -15,6 +17,10 @@ public class PostService {
 
     public void save(Post p) {
         postRepository.save(p);
+    }
+
+    public Optional<Post> findById(long id) {
+        return postRepository.findById(id);
     }
 
     // un metodo che converta automaticamente un request in un Post
@@ -42,6 +48,14 @@ public class PostService {
         boolean existsUser = restTemplate.getForObject(uri, Boolean.class);
         //                  Boolean.TRUE.equals(restTemplate.getForObject
         return existsUser;
+    }
+
+    public boolean existsByTitle(String title) {
+        return postRepository.existsByTitle(title);
+    }
+
+    public boolean existsByTitleAndIdNot(String title, long postId) {
+        return postRepository.existsByTitleAndIdNot(title, postId);
     }
 }
 

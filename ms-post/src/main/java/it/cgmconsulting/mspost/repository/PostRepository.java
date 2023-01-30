@@ -10,4 +10,8 @@ import java.util.Optional;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     boolean existsByTitle(String title);
+
+    Optional<Post> findById(long id);
+
+    boolean existsByTitleAndIdNot(String title, long postId);
 }
