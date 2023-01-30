@@ -2,6 +2,7 @@ package it.cgmconsulting.mspost.controller;
 
 import it.cgmconsulting.mspost.entity.Post;
 import it.cgmconsulting.mspost.payload.request.PostRequest;
+import it.cgmconsulting.mspost.payload.response.PostResponse;
 import it.cgmconsulting.mspost.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,6 +20,13 @@ public class PostController {
     @Autowired
     PostService postService;
 
+    /**
+     * Creazione e salvataggio di un Post
+     *
+     * @param request Post da salvare in formato Request
+     * @return Response del server di salvataggio effettuato
+     * o diniego per esistenza del titolo / autore non avente titolo ROLE_EDITOR
+     */
     @PutMapping
     public ResponseEntity<?> save(@RequestBody @Valid PostRequest request) {
 
@@ -36,10 +45,13 @@ public class PostController {
     /**
      * Modifica Post Esistente
      *
-     * @param request
-     * @return
+     * @param request Post Modificato da salvare in formato Request
+     * @param id      id del Post
+     * @return Response del server di salvataggio effettuato
+     * o diniego per esistenza del titolo in altro Post / autore non avente titolo
      */
     @PatchMapping("/{id}")
+    @Transactional
     public ResponseEntity<?> update(@RequestBody @Valid PostRequest request, @PathVariable long id) {
         // solo chi ha scritto il post può modificarlo
 
@@ -82,19 +94,35 @@ public class PostController {
         return new ResponseEntity<String>("Post updated", HttpStatus.OK);
     }
 
+    /**
+     * Cambio dello stato "Pubblicato" a true del post da parte di un ROLE_ADMIN
+     *
+     * @param postId id del Post da Pubblicare
+     * @param userId id del ROLE_ADMIN
+     * @return Response del serve di operazione effettuata
+     */
     @PatchMapping
     @Transactional
     public ResponseEntity<?> publishPost(@RequestParam long postId, @RequestParam long userId) {
-
-        if (!postService.checkUserAndAuthority(userId, "ROLE_ADMINISTRATOR"))
-            return new ResponseEntity("You are not the administrator", HttpStatus.NOT_FOUND);
+        if (!postService.checkUserAndAuthority(userId, "ROLE_ADMIN"))
+            return new ResponseEntity<>("You are not the administrator", HttpStatus.NOT_FOUND);
 
         Optional<Post> p = postService.findById(postId);
         if (p.isEmpty())
             return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
 
         p.get().setPublished(true);
-        return new ResponseEntity("Post published", HttpStatus.OK);
+        return new ResponseEntity<String>("Post published", HttpStatus.OK);
     }
 
+    /**
+     * Ricerca Post Pubblici (Publushed = True)
+     *
+     * @return Response del server con List di Post Pubblici
+     */
+    @GetMapping
+    public ResponseEntity<?> getPosts() {
+        List<PostResponse> list = postService.getPosts();
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
 }
