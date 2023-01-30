@@ -30,7 +30,7 @@ public class UserController {
         return new ResponseEntity("User " + u.getUsername() + " succefully registred", HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}/{authority}")
+    @GetMapping("/{id}/{authorityName}")
     public ResponseEntity<?> existsByIdAndAuthority(@PathVariable long id, @PathVariable String authorityName){
         return new ResponseEntity(userService.existsByIdAndAuthorityAuthorityName(id, authorityName), HttpStatus.OK);
     }
