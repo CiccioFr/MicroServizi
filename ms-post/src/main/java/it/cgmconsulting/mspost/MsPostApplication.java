@@ -31,6 +31,6 @@ public class MsPostApplication {
     @Profile("sviluppo")
     @Bean   // indiva che viene inizializato subito all'avvio dell'applicazione
     public void provaProfilo(){
-        System.out.println("------------------ Sto utilizzando il profilo di Sviluppo");
+        System.out.println("------MsPostApplication------------ Sto utilizzando il profilo di Sviluppo");
     }
 }
