@@ -1,46 +1,5 @@
-server:
-  # settare la porta a 0 indica di impostare la prima porta disponibile
-  # il GateWay si occuperà di reindirizzare alla porta opportuna
-  port: 0
-  servlet:
-    # EndPoint
-    context-path: /post
-
 spring:
-  application:
-    name: mspost
-  jackson:
-    serialization:
-      indent-output: true
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/ms_post?createDatabaseIfNotExist=true&characterEncoding=UTF-8&autoReconnect=true&useSLL=false&useLegacyDatetimeCode=false
-    username: root
-    password:
-  jpa:
-    generate-ddl: true
-    show-sql: true
-    open-in-view: false
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-        '[format_sql]': true
-
-eureka:
-  client:
-    service-url:
-      default-zone: http://localhost:8761/eureka
-  instance:
-    lease-renewal-interval-in-seconds: 5
-    lease-expiration-duration-in-seconds: 6
-    registry-fetch-interval-seconds: 5
-
-# Modifico livello di logging
-logging:
-  level:
-    it:
-      cgmconsulting:
-        mspost: trace
+  profiles:
+    # carica le impostazioni di application-xxxx-yaml
+    active: sviluppo
+    # da riga di comando (quando assente QUESTO file yaml) java -jar -d profiles nomeprofilo

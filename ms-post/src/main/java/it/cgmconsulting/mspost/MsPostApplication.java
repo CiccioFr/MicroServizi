@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.client.RestTemplate;
 
 @EnableEurekaClient
@@ -25,4 +26,11 @@ public class MsPostApplication {
         return new RestTemplate();
     }
 
+    // per i profili:
+    // per qualunque metodo posso indicare un profilo..
+    @Profile("sviluppo")
+    @Bean   // indiva che viene inizializato subito all'avvio dell'applicazione
+    public void provaProfilo(){
+        System.out.println("------------------ Sto utilizzando il profilo di Sviluppo");
+    }
 }
