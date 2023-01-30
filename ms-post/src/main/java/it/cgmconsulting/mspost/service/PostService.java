@@ -31,13 +31,14 @@ public class PostService {
 
     public boolean checkTitle(String title) {
         // return true se titolo esiste già
-        return postRepository.findByTitle(title);
+        return postRepository.existsByTitle(title);
     }
 
     public boolean checkUserAndAuthority(long id, String authorityName) {
         RestTemplate restTemplate = new RestTemplate();
         // devo richiamare il microServizio di User, devo interrogare il GateWay
         String uri = "http://localhost:8090/user/" + id + "/" + authorityName;
+        System.out.println(uri);
         boolean existsUser = restTemplate.getForObject(uri, Boolean.class);
         //                  Boolean.TRUE.equals(restTemplate.getForObject
         return existsUser;

@@ -1,9 +1,9 @@
 server:
   # settare la porta a 0 indica di impostare la prima porta disponibile
-  # perchè il GateWay
+  # il GateWay si occuperà di reindirizzare alla porta opportuna
   port: 0
   servlet:
-    # Tutti gli endPoint che
+    # EndPoint
     context-path: /post
 
 spring:
@@ -37,3 +37,10 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 6
     registry-fetch-interval-seconds: 5
+
+# Modifico livello di logging
+logging:
+  level:
+    it:
+      cgmconsulting:
+        mspost: trace
