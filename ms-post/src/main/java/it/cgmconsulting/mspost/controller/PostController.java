@@ -118,7 +118,7 @@ public class PostController {
     /**
      * Ricerca Post Pubblici (Publushed = True)
      *
-     * @return Response del server con List di Post Pubblici
+     * @return Response con List di Post Pubblici
      */
     @GetMapping
     public ResponseEntity<?> getPosts() {

@@ -25,11 +25,11 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public boolean existsByTitleAndIdNot(String title, long postId){
+    public boolean existsByTitleAndIdNot(String title, long postId) {
         return postRepository.existsByTitleAndIdNot(title, postId);
     }
 
-    public boolean existsByTitle(String title){
+    public boolean existsByTitle(String title) {
         return postRepository.existsByTitle(title);
     }
 
@@ -62,10 +62,11 @@ public class PostService {
     }
 
     /**
-     * Estrapola dal DB una List di Post Pubblici, passando da Repository
+     * Chiede a Repository una List di Post Pubblici
+     *
      * @return List di Post Pubblici strutturati secondo PostResponse
      */
-    public List<PostResponse> getPosts(){
+    public List<PostResponse> getPosts() {
         List<PostResponse> list = postRepository.getPosts();
         // richiamare il microservizio msUser e farmi restituire una lista (UserResponse) di utenti che siano ROLE_EDITOR
         // Ciclo list e per ogni match tra id dello user e author di PostResponse, setto lo username
