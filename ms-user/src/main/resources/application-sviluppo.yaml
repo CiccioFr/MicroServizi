@@ -1,6 +1,6 @@
 server:
   # settare la porta a 0 indica di impostare la prima porta disponibile
-  # perchè il GateWay
+  # il GateWay si occuperà di reindirizzare alla porta opportuna
   port: 0
   servlet:
     # EndPoint
@@ -41,3 +41,16 @@ eureka:
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 6
     registry-fetch-interval-seconds: 5
+
+# restitusce lo stato di salute del MicroServizio, collegato alla dipendenza nel pom.xml
+# http://{host}:{gateway port}/{context-path}/actuator/health
+# http://localhost:8090/post/actuator/health
+management:
+  health:
+  endpoints:
+    web:
+      exposure:
+        include: health # mostrami health
+  endpoint:
+    health:
+      show-details: always # quando mostrarli
