@@ -54,3 +54,10 @@ management:
   endpoint:
     health:
       show-details: always # quando mostrarli
+
+# Livello di logging
+logging:
+  level:
+    it:
+      cgmconsulting:
+        mspost: trace

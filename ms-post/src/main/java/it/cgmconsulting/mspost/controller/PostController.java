@@ -95,7 +95,7 @@ public class PostController {
     }
 
     /**
-     * Cambio dello stato "Pubblicato" a true del post da parte di un ROLE_ADMIN
+     * Cambio dello stato "Pubblicato" a true del Post da parte di un ROLE_ADMIN
      *
      * @param postId id del Post da Pubblicare
      * @param userId id del ROLE_ADMIN

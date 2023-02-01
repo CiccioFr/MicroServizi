@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsByUsernameOrEmail(String username, String email);
 
-    boolean existsByIdAndAuthorityAuthorityName(long id, String authorityName);
+    boolean existsByIdAndAuthorityAuthorityName(long idAuthority, String authorityName);
 
     /**
      * Ricerca in DB di User con Ruolo passato come parametro

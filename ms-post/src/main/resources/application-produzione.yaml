@@ -38,7 +38,7 @@ eureka:
     lease-expiration-duration-in-seconds: 6
     registry-fetch-interval-seconds: 5
 
-# Modifico livello di logging
+# Livello di logging
 logging:
   level:
     it:

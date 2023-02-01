@@ -33,7 +33,7 @@ public class PostService {
         return postRepository.existsByTitle(title);
     }
 
-    // un metodo che converta automaticamente un request in un Post
+    // un metodo che converta automaticamente una request in un Post
     // ci sono diverse .. 9.39
     public Post fromRequestToEntity(PostRequest pr) {
         Post p = new Post(
@@ -52,13 +52,14 @@ public class PostService {
 
     public boolean checkUserAndAuthority(long id, String authorityName) {
         RestTemplate restTemplate = new RestTemplate();
-        // devo richiamare il microServizio di User, devo interrogare il GateWay
+        // richiama il microServizio di User, devo interrogare il GateWay
         String uri = "http://localhost:8090/user/" + id + "/" + authorityName;
-        System.out.println(uri);
+        System.out.println("Stampo l'URI: " + uri);
         boolean existsUser = restTemplate.getForObject(uri, Boolean.class);
         // suggerito dall'iDE.. Unboxing of 'restTemplate.getForObject(uri, Boolean.class)' may produce 'NullPointerException'
-        // Boolean.TRUE.equals(restTemplate.getForObject(uri, Boolean.class));
+        // boolean existsUser = Boolean.TRUE.equals(restTemplate.getForObject(uri, Boolean.class));
         return existsUser;
+//        return true;
     }
 
     /**

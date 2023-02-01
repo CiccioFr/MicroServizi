@@ -18,6 +18,13 @@ public class UserController {
     @Autowired
     UserService userService;
 
+    /**
+     * Registrazione di un nuovo utente
+     *
+     * @param request User da salvare in formato Request
+     * @return Response del server di salvataggio effettuato
+     * o diniego per UserName o Email già usate
+     */
     @PutMapping("/singup")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupRequest request) {
 
@@ -32,13 +39,20 @@ public class UserController {
         return new ResponseEntity("User " + u.getUsername() + " succefully registred", HttpStatus.CREATED);
     }
 
-    @GetMapping("/{authorityName}/{id}")
-    public ResponseEntity<?> existsByIdAndAuthority(@PathVariable long id, @PathVariable String authorityName) {
-        return new ResponseEntity(userService.existsByIdAndAuthorityAuthorityName(id, authorityName), HttpStatus.OK);
+    /**
+     * Login utente
+     *
+     * @param id
+     * @param authorityName
+     * @return
+     */
+    @GetMapping("/{idAuthority}/{authorityName}")
+    public ResponseEntity<?> existsByIdAndAuthority(@PathVariable long idAuthority, @PathVariable String authorityName) {
+        return new ResponseEntity(userService.existsByIdAndAuthorityAuthorityName(idAuthority, authorityName), HttpStatus.OK);
     }
 
     /**
-     * Ricerca di User con Ruolo passato come parametro
+     * Ricerca di Users per Ruolo (passato come parametro)
      *
      * @param authorityName Ruolo da Ricercare
      * @return Response con List di User con Ruolo richiesto
