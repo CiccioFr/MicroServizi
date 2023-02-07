@@ -8,9 +8,9 @@ spring:
   cloud:
     gateway:
       routes:
-        # il trattino indica che sotto root avremo blocchi di route
+        # il trattino indica che sotto routes: avremo blocchi di route (simil array)
         - id: mspost
-          # lb sta per LoadBalancer // che nel pom permette di accoppiare il nome dell'appli con l'indirizzo
+          # lb sta per LoadBalancer // permette di accoppiare il nome dell'appliazione MS con l'indirizzo
           # va a recuperare da Discovery l'indirizzo
           # come uri non metto http:.. ma il nome dell'applicazione:
           # il gateway contatta
@@ -23,6 +23,14 @@ spring:
           uri: lb://msuser # http://localhost:xxxxx
           predicates:
             - Path=/user/**
+        - id: mscomment
+          uri: lb://mscomment # http://localhost:xxxxx
+          predicates:
+            - Path=/mscomment/**
+        - id: msrating
+          uri: lb://msrating # http://localhost:xxxxx
+          predicates:
+            - Path=/msrating/**
 
 eureka:
   client:
@@ -31,9 +39,10 @@ eureka:
       # di solito viene passata come variabile d'ambiente
       default-zone: http://localhost:8761/eureka
 
-# Modifico livello di logging
+# Livello di logging (ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF)
 logging:
   level:
+    # indicando i vari sotto-package possiamo adottare granulometrie diverse
     org:
       springframework:
         cloud:
