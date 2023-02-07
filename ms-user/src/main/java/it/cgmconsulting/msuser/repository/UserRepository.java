@@ -23,10 +23,20 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @Query(value = "SELECT new it.cgmconsulting.msuser.payload.response.UserResponse(" +
             "u.id," +
-            "u.username" +
-            ") FROM User u " +
-            "WHERE u.enabled=true " +
-            "AND u.authority.authorityName = :authorityName")
+            "u.username) " +
+            "FROM User u " +
+            "WHERE u.authority.authorityName = :authorityName")
     List<UserResponse> getByRole(@Param("authorityName") String authorityName);
 
+    /**
+     * Ricerca in DB di User con ID passato come parametro
+     *
+     * @return User
+     */
+    @Query(value="SELECT new it.cgmconsulting.msuser.payload.response.UserResponse(" +
+            "u.id," +
+            "u.username) " +
+            "FROM User u " +
+            "WHERE u.id = :userId")
+    UserResponse getUser(@Param("userId") long userId);
 }

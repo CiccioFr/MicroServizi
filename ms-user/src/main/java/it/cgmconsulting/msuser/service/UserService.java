@@ -6,6 +6,7 @@ import it.cgmconsulting.msuser.payload.request.SignupRequest;
 import it.cgmconsulting.msuser.payload.response.UserResponse;
 import it.cgmconsulting.msuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,14 @@ public class UserService {
      */
     public List<UserResponse> getByRole(String authorityName) {
         return userRepository.getByRole(authorityName);
+    }
+
+    /**
+     * Ricerca di un user
+     * @param userId id dell'user da cercare
+     * @return User
+     */
+    public UserResponse getUser(@Param("userId") long userId){
+        return userRepository.getUser(userId);
     }
 }

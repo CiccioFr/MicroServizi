@@ -36,19 +36,17 @@ public class UserController {
             return new ResponseEntity("Authority not Found", HttpStatus.BAD_REQUEST);
 
         userService.save(u);
-        return new ResponseEntity("User " + u.getUsername() + " succefully registred", HttpStatus.CREATED);
+        return new ResponseEntity("User " + u.getUsername() + " successfully registered", HttpStatus.CREATED);
     }
 
     /**
-     * Login utente
-     *
      * @param id
      * @param authorityName
      * @return
      */
-    @GetMapping("/{idAuthority}/{authorityName}")
-    public ResponseEntity<?> existsByIdAndAuthority(@PathVariable long idAuthority, @PathVariable String authorityName) {
-        return new ResponseEntity(userService.existsByIdAndAuthorityAuthorityName(idAuthority, authorityName), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<?> existsByIdAndAuthority(@RequestParam long id, @RequestParam String authorityName) {
+        return new ResponseEntity(userService.existsByIdAndAuthorityAuthorityName(id, authorityName), HttpStatus.OK);
     }
 
     /**
@@ -59,7 +57,23 @@ public class UserController {
      */
     @GetMapping("/{authorityName}")
     public ResponseEntity<?> getUsersByRole(@PathVariable String authorityName) {
+/*        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }*/
         List<UserResponse> list = userService.getByRole(authorityName);
         return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    /**
+     * Ricerca di un User
+     *
+     * @param userId id dell'User da cercare
+     * @return Response User trovato
+     */
+    @GetMapping("/id/{userId}")
+    public ResponseEntity<?> getUser(@PathVariable long userId) {
+        return new ResponseEntity(userService.getUser(userId), HttpStatus.OK);
     }
 }
