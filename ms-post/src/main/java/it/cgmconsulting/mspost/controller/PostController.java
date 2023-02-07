@@ -2,19 +2,25 @@ package it.cgmconsulting.mspost.controller;
 
 import it.cgmconsulting.mspost.entity.Post;
 import it.cgmconsulting.mspost.payload.request.PostRequest;
+import it.cgmconsulting.mspost.payload.response.CommentResponse;
+import it.cgmconsulting.mspost.payload.response.PostDetailResponse;
 import it.cgmconsulting.mspost.payload.response.PostResponse;
+import it.cgmconsulting.mspost.payload.response.UserResponse;
 import it.cgmconsulting.mspost.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Validated
 public class PostController {
 
     @Autowired
@@ -43,7 +49,8 @@ public class PostController {
     }
 
     /**
-     * Modifica Post Esistente
+     * Modifica Post Esistente.
+     * Solo chi ha scritto il post può modificarlo
      *
      * @param request Post Modificato da salvare in formato Request
      * @param id      id del Post
@@ -53,43 +60,22 @@ public class PostController {
     @PatchMapping("/{id}")
     @Transactional
     public ResponseEntity<?> update(@RequestBody @Valid PostRequest request, @PathVariable long id) {
-        // solo chi ha scritto il post può modificarlo
 
-    /*  PROVA MIA
-            Post postDaModificare = postService.findById(id).get();
+        Optional<Post> postEsistente = postService.findById(id);
 
-            */
-        /** Verifica esistenza del titolo del Post e Verifica dell'autore *//*
-
-            if (postDaModificare.getTitle().equals(postService.checkTitle(request.getTitle()))
-                    && request.getAuthor() != postDaModificare.getAuthor())
-                return new ResponseEntity("The post with " + request.getTitle() + " already exist", HttpStatus.BAD_REQUEST);
-
-            */
-        /** Verifica dell'autore *//*
-
-            if (request.getAuthor() != postDaModificare.getAuthor())
-                return new ResponseEntity("Non sei l'autore del Post", HttpStatus.BAD_REQUEST);
-
-            postService.save(postDaModificare);
-            return new ResponseEntity("The Post " + postDaModificare.getTitle() + " has been updated", HttpStatus.UPGRADE_REQUIRED);
-    */
-
-        Optional<Post> p = postService.findById(id);
-
-        if (p.isEmpty())
+        if (postEsistente.isEmpty())
             return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
 
-        if (request.getAuthor() != p.get().getAuthor())
+        if (request.getAuthor() != postEsistente.get().getAuthor())
             return new ResponseEntity<>("Solo l'autore del post può modificarlo", HttpStatus.FORBIDDEN);
 
-        if (postService.existsByTitleAndIdNot(request.getTitle(), p.get().getId()))
+        if (postService.existsByTitleAndIdNot(request.getTitle(), postEsistente.get().getId()))
             return new ResponseEntity<>("Title already exists", HttpStatus.BAD_REQUEST);
 
-        p.get().setTitle(request.getTitle());
-        p.get().setOverview(request.getOverview());
-        p.get().setContent(request.getContent());
-        p.get().setPublished(false);
+        postEsistente.get().setTitle(request.getTitle());
+        postEsistente.get().setOverview(request.getOverview());
+        postEsistente.get().setContent(request.getContent());
+        postEsistente.get().setPublished(false);
 
         return new ResponseEntity<String>("Post updated", HttpStatus.OK);
     }
@@ -116,7 +102,7 @@ public class PostController {
     }
 
     /**
-     * Ricerca Post Pubblici (Publushed = True)
+     * Ricerca di tutti Post Pubblici (Publushed = True)
      *
      * @return Response con List di Post Pubblici
      */
@@ -125,4 +111,49 @@ public class PostController {
         List<PostResponse> list = postService.getPosts();
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
+    /**
+     * verifica se il post esiste ed è pubblicato
+     *
+     * @param postId id del post da verificare
+     * @return ResponseEntity con true/false in body
+     */
+    @GetMapping("verify-post/{postId}")
+    public ResponseEntity<?> verifyPost(@PathVariable @Min(1) long postId) {
+        if (!postService.existsByIdAndPublishedTrue(postId))
+            return new ResponseEntity(false, HttpStatus.NOT_FOUND);
+
+        return new ResponseEntity(true, HttpStatus.OK);
+    }
+
+    /**
+     * Ricerca i commenti di un post e li accorpa al post
+     *
+     * @param postId id del post in oggetto
+     * @return ResponseEntity di un post arricchito dei suoi commenti
+     */
+    @GetMapping("/{postId}")
+    public ResponseEntity getPostDetail(@PathVariable long postId) {
+
+        // recuperare il dettaglio del post
+        PostResponse post = postService.getPost(postId);
+        if (post == null)
+            return new ResponseEntity("Post not found", HttpStatus.NOT_FOUND);
+
+        // recuperare username dell'author del post
+        UserResponse userAutoreDelPost = postService.getUser(post.getAuthor());
+        if (userAutoreDelPost == null)
+            return new ResponseEntity("Author of Post not found", HttpStatus.NOT_FOUND);
+        post.setAuthorUsername(userAutoreDelPost.getUsername());
+
+        // recuperare i commenti del post e per ognuno di essi trovare lo username di chi l'ha scritto.
+        List<CommentResponse> comments = postService.getCommentsByPost(post.getId());
+
+        // recupero la media dei voti del post
+        double average = postService.getAvgRatePost(postId);
+
+        PostDetailResponse pdr = postService.fromPostResponseToPostDetailResponse(post, comments, average);
+        return new ResponseEntity(pdr, HttpStatus.OK);
+    }
+
 }

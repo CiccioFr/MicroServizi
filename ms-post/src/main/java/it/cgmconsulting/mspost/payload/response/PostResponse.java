@@ -16,7 +16,7 @@ public class PostResponse {
 
     private long id;
     private String title;
-    private String overview;
+    private String overview; // per lista di Post 'overview' è valorizzato con overview, per il PostDetail con content
     private long author;
     private String authorUsername;
 
