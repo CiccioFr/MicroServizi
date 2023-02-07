@@ -16,6 +16,7 @@
     <properties>
         <java.version>17</java.version>
         <spring-cloud.version>2021.0.5</spring-cloud.version>
+        <!-- agg -->
         <springdoc-openapi-ui>1.6.11</springdoc-openapi-ui>
     </properties>
     <dependencies>
@@ -66,13 +67,44 @@
             <version>${springdoc-openapi-ui}</version>
         </dependency>
 
-
         <!-- ci da un tot di informazioni sullo stato del microservizio
          all'url:   http://{host}:{gateway port}/{context-path}/actuator/health
                 es. http://localhost:8090/post/actuator/health   -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!--        <dependency>-->
+        <!--            <groupId>it.cgmconsulting</groupId>-->
+        <!--            <artifactId>ms-user</artifactId>-->
+        <!--            <version>0.0.1-SNAPSHOT</version>-->
+        <!--            <scope>compile</scope>-->
+        <!--        </dependency>-->
+
+        <!-- Zipkin & Sleuth -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-sleuth</artifactId>
+        </dependency>
+
+        <!-- Circuit Breaker -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+        </dependency>
+
+        <!-- Creare file pdf-->
+        <!-- https://mvnrepository.com/artifact/com.itextpdf/itext7-core -->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext7-core</artifactId>
+            <version>7.2.3</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
     <dependencyManagement>
