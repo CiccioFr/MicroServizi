@@ -1,0 +1,7 @@
+#       COMMENT
+spring:
+  profiles:
+    # carica le impostazioni di application-xxxx.yaml
+    active: sviluppo
+    # se non voglio/posso utilizzare un application.yaml, posso passare il profilo come parametro da riga di comando:
+    # java -jar -Dspring.profiles.active=produzione  mspost-0.0.1-SNAPSHOT.jar
