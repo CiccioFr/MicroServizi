@@ -3,6 +3,7 @@ package it.cgmconsulting.msuser.controller;
 import it.cgmconsulting.msuser.entity.User;
 import it.cgmconsulting.msuser.payload.request.SignupRequest;
 import it.cgmconsulting.msuser.payload.response.UserResponse;
+import it.cgmconsulting.msuser.service.AuthorityService;
 import it.cgmconsulting.msuser.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    AuthorityService authorityService;
 
     /**
      * Registrazione di un nuovo utente
@@ -75,5 +78,15 @@ public class UserController {
     @GetMapping("/id/{userId}")
     public ResponseEntity<?> getUser(@PathVariable long userId) {
         return new ResponseEntity(userService.getUser(userId), HttpStatus.OK);
+    }
+
+    @GetMapping("backup")
+    public ResponseEntity<?> getBackupUsers(){
+        return new ResponseEntity(userService.getBackupUsers(), HttpStatus.OK);
+    }
+
+    @GetMapping("authority/backup")
+    public ResponseEntity<?> getBackupAuthorities(){
+        return new ResponseEntity(authorityService.getBackupAuthorities(), HttpStatus.OK);
     }
 }

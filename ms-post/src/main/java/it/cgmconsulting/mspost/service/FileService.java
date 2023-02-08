@@ -17,9 +17,17 @@ import java.util.Iterator;
 @Service
 public class FileService {
 
+    // @Value di Spring, non di lombok
     @Value("${post.path}")
     private String imagePath;
 
+    /**
+     * verifica delle dimensioni in peso
+     *
+     * @param file
+     * @param size
+     * @return
+     */
     public boolean checkSize(MultipartFile file, long size) {
         return !file.isEmpty() && file.getSize() <= size;
     }
@@ -40,7 +48,9 @@ public class FileService {
         return bf.getHeight() <= height && bf.getWidth() <= width;
     }
 
+    // per le estensioni, ci passa lui il metodo lungo e rognoso, affinato nei vari corsi
     public boolean checkExtension(MultipartFile file, String[] extensions) {
+        // ImageInputStream ha al suo interno un oggetto iteratore che contiene image reader che contiene il mimeType, che verifico se contento nel mio array di stringhe
         ImageInputStream img = null;
         try {
             img = ImageIO.createImageInputStream(file.getInputStream());
@@ -66,6 +76,14 @@ public class FileService {
         return false;
     }
 
+    /**
+     * caricamento fisico dell'immagine, ed eliminazione della vecchia immagine
+     *
+     * @param file
+     * @param postId
+     * @param oldFile
+     * @return
+     */
     public String uploadPostImage(MultipartFile file, long postId, String oldFile) {
         String filename = renameImage(postId, file.getOriginalFilename());
         Path path = Paths.get(imagePath + filename);
@@ -80,6 +98,13 @@ public class FileService {
         return filename;
     }
 
+    /**
+     * rinomina il file
+     *
+     * @param postId
+     * @param filename
+     * @return
+     */
     public String renameImage(long postId, String filename) {
         // pippo.jpg -> 1.jpg
         return postId + "." + filename.substring(filename.lastIndexOf(".") + 1);

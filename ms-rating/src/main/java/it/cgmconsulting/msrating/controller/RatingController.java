@@ -44,4 +44,9 @@ public class RatingController {
     public ResponseEntity<?> getAverage(@PathVariable long postId){
         return new ResponseEntity(ratingService.getAverage(postId), HttpStatus.OK);
     }
+
+    @GetMapping("backup")
+    public ResponseEntity<?> getBackupRatings(){
+        return new ResponseEntity(ratingService.getBackupRatings(), HttpStatus.OK);
+    }
 }

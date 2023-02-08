@@ -19,7 +19,6 @@ public class MsCommentApplication {
 	// solo nel caso del RestTemplate aggiungere @LoadBalanced
 	// @LoadBalanced fa in modo che tutte le richieste vengono reindirizzate dal microservizio che se neoccupa
 	@LoadBalanced // capisce che il giro che fa e la redirect, sa che passa dal gateway e verrà redirect
-	//
 	@Bean
 	// il bean del PasswordEncoder (cosa che nella monolitica, dovrebbe aver messo nelle classi di Spring Security)
 	//  vedere https://reflectoring.io/spring-resttemplate/

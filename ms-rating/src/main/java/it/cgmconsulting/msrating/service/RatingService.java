@@ -1,10 +1,13 @@
 package it.cgmconsulting.msrating.service;
 
 import it.cgmconsulting.msrating.entity.Rating;
+import it.cgmconsulting.msrating.payload.response.RatingBackupResponse;
 import it.cgmconsulting.msrating.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.List;
 
 @Service
 public class RatingService {
@@ -36,4 +39,7 @@ public class RatingService {
         return existsUser;
     }
 
+    public List<RatingBackupResponse> getBackupRatings(){
+        return ratingRepository.getBackupRatings();
+    }
 }

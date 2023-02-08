@@ -154,4 +154,8 @@ public class CommentService {
         log.info("--- USER SERVICE UNAVAILABLE (" + e.getMessage() + ") ---");
         return new ArrayList<>();
     }
+
+    public List<Comment> getBackupComments() {
+        return commentRepository.findAll();
+    }
 }

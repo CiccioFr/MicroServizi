@@ -156,4 +156,9 @@ public class PostController {
         return new ResponseEntity(pdr, HttpStatus.OK);
     }
 
+    @GetMapping("backup")
+    public ResponseEntity getBackupPosts() {
+        return new ResponseEntity(postService.getBackupPosts(), HttpStatus.OK);
+    }
+
 }

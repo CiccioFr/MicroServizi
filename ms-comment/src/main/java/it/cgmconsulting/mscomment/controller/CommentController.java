@@ -44,4 +44,9 @@ public class CommentController {
     public ResponseEntity<?> getComments(@PathVariable long postId) {
         return new ResponseEntity(commentService.getByPost(postId), HttpStatus.OK);
     }
+
+    @GetMapping("backup")
+    public ResponseEntity<?> getBackupComments() {
+        return new ResponseEntity(commentService.getBackupComments(), HttpStatus.OK);
+    }
 }
