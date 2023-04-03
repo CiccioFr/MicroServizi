@@ -17,7 +17,12 @@ import java.util.List;
 public class BackupApiService {
 
     /* COMMENT */
-    @CircuitBreaker(name="a-tempo", fallbackMethod = "getCommentsFallBack")
+
+    /**
+     * Contatta Ms-Comment, che restituisce una List di Entity comment
+     * @return List di CommentBackupResponse, trasposizione di List di comment del MS
+     */
+    @CircuitBreaker(name="a-tempo-comment", fallbackMethod = "getCommentsFallBack")
     List<CommentBackupResponse> getComments(){
         String uri = "http://localhost:8090/comment/backup";
         RestTemplate restTemplate = new RestTemplate();
@@ -35,7 +40,7 @@ public class BackupApiService {
     }
 
     /* POST */
-    @CircuitBreaker(name="a-tempo", fallbackMethod = "getPostsFallBack")
+    @CircuitBreaker(name="a-tempo-post", fallbackMethod = "getPostsFallBack")
     List<PostBackupResponse> getPosts(){
         String uri = "http://localhost:8090/post/backup";
         RestTemplate restTemplate = new RestTemplate();
@@ -53,7 +58,7 @@ public class BackupApiService {
     }
 
     /* RATING */
-    @CircuitBreaker(name="a-tempo", fallbackMethod = "getRatingsFallBack")
+    @CircuitBreaker(name="a-tempo-rating", fallbackMethod = "getRatingsFallBack")
     List<RatingBackupResponse> getRatings(){
         String uri = "http://localhost:8090/rating/backup";
         RestTemplate restTemplate = new RestTemplate();
@@ -71,7 +76,7 @@ public class BackupApiService {
     }
 
     /* USER */
-    @CircuitBreaker(name="a-tempo", fallbackMethod = "getUsersFallBack")
+    @CircuitBreaker(name="a-tempo-user", fallbackMethod = "getUsersFallBack")
     List<UserBackupResponse> getUsers(){
         String uri = "http://localhost:8090/user/backup";
         RestTemplate restTemplate = new RestTemplate();
@@ -89,7 +94,7 @@ public class BackupApiService {
     }
 
     /* AUTHORITY */
-    @CircuitBreaker(name="a-tempo", fallbackMethod = "getAuthoritiesFallBack")
+    @CircuitBreaker(name="a-tempo-authority", fallbackMethod = "getAuthoritiesFallBack")
     List<AuthorityBackupResponse> getAuthorities(){
         String uri = "http://localhost:8090/user/authority/backup";
         RestTemplate restTemplate = new RestTemplate();
