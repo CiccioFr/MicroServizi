@@ -3,7 +3,6 @@ package it.cgmconsulting.msrating.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +28,7 @@ public class Rating {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updateAt;
+    private LocalDateTime updatedAt;
 
     public Rating(RatingId ratingId, byte rate) {
         this.ratingId = ratingId;

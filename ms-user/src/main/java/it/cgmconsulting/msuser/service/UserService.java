@@ -3,6 +3,7 @@ package it.cgmconsulting.msuser.service;
 import it.cgmconsulting.msuser.entity.Authority;
 import it.cgmconsulting.msuser.entity.User;
 import it.cgmconsulting.msuser.payload.request.SignupRequest;
+import it.cgmconsulting.msuser.payload.response.UserBackupResponse;
 import it.cgmconsulting.msuser.payload.response.UserResponse;
 import it.cgmconsulting.msuser.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,11 @@ public class UserService {
      * @param userId id dell'user da cercare
      * @return User
      */
-    public UserResponse getUser(@Param("userId") long userId){
+    public UserResponse getUser(long userId){
         return userRepository.getUser(userId);
+    }
+
+    public List<UserBackupResponse> getBackupUsers(){
+        return userRepository.getBackupUsers();
     }
 }

@@ -27,7 +27,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        # Spring ver. 3.0.2 non accetta più  org.hibernate.dialect.MySQL8Dialect
+        # Spring ver. 3.0.2 non accetta più  org.hibernate.dialect.MySQL5InnoDBDialect
         dialect: org.hibernate.dialect.MySQLDialect
         '[format_sql]': true
 

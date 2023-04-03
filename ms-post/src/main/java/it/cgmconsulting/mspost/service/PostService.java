@@ -73,8 +73,10 @@ public class PostService {
     }
 
     // TODO rivedere javaDoc
+
     /**
      * verifica user e authority DA RIVEDERE
+     *
      * @param id
      * @param authorityName
      * @return
@@ -238,10 +240,12 @@ public class PostService {
         double rateAvg = restTemplate.getForObject(uri, Double.class);
         return rateAvg;
     }
-    public double getAvgRatePostFallback(Exception e){
+
+    public double getAvgRatePostFallback(Exception e) {
         log.info(" ---- Rating Microservice not avalaible. " + e.getMessage());
         return 0d;
     }
+
     /**
      * Aggiunge commenti e media dei voti all'oggetto post
      *
@@ -264,5 +268,9 @@ public class PostService {
 
     public Optional<Post> findByIdAndPublishedTrue(long postId) {
         return postRepository.findByIdAndPublishedTrue(postId);
+    }
+
+    public List<Post> getBackupPosts() {
+        return postRepository.findAll();
     }
 }

@@ -2,6 +2,8 @@ server:
   # settare la porta a 0 indica di impostare la prima porta disponibile
   # il GateWay si occuperà di reindirizzare alla porta opportuna
   port: 0
+  tomcat:
+    basedir: /Users/Public/myblog/temp/
   servlet:
     # EndPoint
     context-path: /comment
@@ -12,7 +14,6 @@ spring:
   jackson:
     serialization:
       indent-output: true
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/ms_comment?createDatabaseIfNotExist=true&characterEncoding=UTF-8&autoReconnect=true&useSLL=false&useLegacyDatetimeCode=false
@@ -59,7 +60,8 @@ management:
     health:
       show-details: always # quando mostrarli
 
-# siamo noi a configurare se succede che il MS chiamato non rispo o ci mette troppo tempo
+# Circuit Breaker - Impostazioni
+# nel caso il MS chiamato non risponda o ci metta troppo tempo
 resilience4j.circuitbreaker:
   instances:
     a-tempo:
