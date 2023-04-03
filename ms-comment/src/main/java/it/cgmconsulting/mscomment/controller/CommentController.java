@@ -26,13 +26,15 @@ public class CommentController {
     public ResponseEntity<?> save(@RequestBody @Valid CommentRequest request) {
 
         // verificare esistenza utente e con ruolo di READER
-        if (!commentService.checkUserAndAuthority(request.getAuthor(), "ROLE_READER"))
+        if (!commentService.checkUserAndAuthority(request.getAuthor(), "ROLE_READER")) {
+            System.out.println(" ---> "+request.getAuthor()+" <---");
             //      andiamo a richiamare l'endPoint existsByIdAndAuthority dello UserController
-            return new ResponseEntity<>("Author not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Author not found", HttpStatus.NOT_FOUND);
+        }
 
         // verificare esistenza post
         if (!commentService.checkIfPostExist(request.getPost()))
-            return new ResponseEntity<>("Post not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Post not found", HttpStatus.NOT_FOUND);
         Comment comment = commentService.fromRequestToEntity(request);
 
         // salvare il commento

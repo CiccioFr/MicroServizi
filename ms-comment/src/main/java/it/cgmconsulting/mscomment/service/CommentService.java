@@ -78,6 +78,7 @@ public class CommentService {
         // boolean existsUser = restTemplate.getForObject(uri, Boolean.class);
         // SOLUZIONE 2
         String uri = "http://localhost:8090/user?id={id}&authorityName={authorityName}";
+        System.out.println(" Barbara è stata qua ");
         boolean existsUser = restTemplate.getForObject(uri, Boolean.class, id, authorityName);
         return existsUser;
     }
@@ -156,6 +157,7 @@ public class CommentService {
     }
 
     public List<Comment> getBackupComments() {
+        // metodo DERIVATO
         return commentRepository.findAll();
     }
 }
