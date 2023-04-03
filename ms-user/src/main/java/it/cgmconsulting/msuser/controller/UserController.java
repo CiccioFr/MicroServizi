@@ -43,13 +43,13 @@ public class UserController {
     }
 
     /**
-     * @param id
+     * @param userId
      * @param authorityName
      * @return
      */
     @GetMapping
-    public ResponseEntity<?> existsByIdAndAuthority(@RequestParam long id, @RequestParam String authorityName) {
-        return new ResponseEntity(userService.existsByIdAndAuthorityAuthorityName(id, authorityName), HttpStatus.OK);
+    public ResponseEntity<?> existsByIdAndAuthority(@RequestParam long userId, @RequestParam String authorityName) {
+        return new ResponseEntity(userService.existsByIdAndAuthorityAuthorityName(userId, authorityName), HttpStatus.OK);
     }
 
     /**
